@@ -1,0 +1,15 @@
+---
+# Change these things to your liking
+django_project_name: YOUR_PROJECT_NAME
+postgres_pw: YOUR_POSTGRES_PASSWORD
+postgres_django_pw: YOUR_POSTGRES_DJANGO_PASSWORD 
+git_repo: YOUR_GIT_URL 
+nginx_server_name: example.com
+
+# The things here should not be changed when using a default server layout
+venv_name: "{{ django_project_name }}"
+server_git_repo: /home/django/src/{{ django_project_name }}
+server_git_project_root: "{{ server_git_repo }}/{{ django_project_name }}"
+server_requirements_txt: "{{ server_git_project_root }}/requirements.txt"
+server_project_folder: /home/django/project
+server_assets_folder: /home/django/project_assets

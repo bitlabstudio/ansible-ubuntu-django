@@ -1,0 +1,33 @@
+---
+- name: virtualenv - create folders
+  raw: mkdir -p ~/tmp
+
+- name: virtualenv - install setuptools
+  remote_user: root
+  apt: name=python-setuptools
+
+- name: virtualenv - install pip
+  remote_user: root
+  easy_install: name=pip
+
+- name: virtualenv - install
+  remote_user: root
+  pip: name=virtualenv
+
+- name: virtualenv - install virtualenvwrapper
+  remote_user: root
+  pip: name=virtualenvwrapper
+
+- name: virtualenv - add virtualenvwrapper exports to .bash_profile
+  lineinfile: 'dest=~/.bash_profile line="{{ item }}"'
+  with_items:
+    - export PATH=$PATH:$HOME/bin
+    - export TMPDIR=$HOME/tmp
+    - export WORKON_HOME=$HOME/Envs
+    - export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+    - export PIP_VIRTUALENV_BASE=$WORKON_HOME
+    - export PIP_RESPECT_VIRTUALENV=true
+    - source /usr/local/bin/virtualenvwrapper.sh
+
+- name: virtualenv - source the new .bashrc
+  raw: source .bashrc

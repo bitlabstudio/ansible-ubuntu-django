@@ -1,0 +1,19 @@
+---
+- name: supervisor - create folders
+  shell: mkdir -p etc log/supervisor
+
+- name: supervisor - install
+  remote_user: root
+  pip: name=supervisor
+
+- name: supervisor - upload supervisord.conf
+  template: src=supervisord.conf dest=/home/django/etc/supervisord.conf
+
+- name: supervisor - add crontab
+  cron: name="start supervisor" minute="*/5" job="PATH=/usr/local/bin /usr/local/bin/supervisord -c /home/django/etc/supervisord.conf > /home/django/log/supervisor/crontab.log 2>&1"
+
+- name: supervisor - restart
+  shell: source ~/.bash_profile && supervisorctl restart all
+  args:
+    chdir: ~/etc/
+    executable: /bin/bash

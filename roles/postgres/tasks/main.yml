@@ -1,0 +1,47 @@
+---
+- name: postgres - add postgres to sources.list
+  remote_user: root
+  lineinfile: create=yes dest=/etc/apt/sources.list.d/pgdg.list line='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main'
+
+- name: postgres - add postgres repository key
+  remote_user: root
+  raw: wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
+- name: postgres - install packages
+  remote_user: root
+  apt: pkg={{ item }} update_cache=yes state=latest
+  with_items:
+    - postgresql-9.3
+    - postgresql-contrib
+    - postgresql-server-dev-9.3
+    - postgresql-9.3-postgis-2.1
+    - python-psycopg2
+    - pgadmin3
+    - libpq-dev
+
+- name: postgres - change admin password
+  remote_user: root
+  raw: sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD '{{ postgres_pw }}';"
+
+- name: postgres - create django user
+  remote_user: root
+  sudo_user: postgres
+  sudo: yes
+  postgresql_user: name=django
+                   role_attr_flags=SUPERUSER
+                   password={{ postgres_django_pw }}
+
+- name: postgres - create django db
+  remote_user: root
+  sudo_user: postgres
+  sudo: yes
+  postgresql_db: name=django
+                 encoding='UTF-8'
+
+- name: postgres - create project db
+  postgresql_db: name={{ django_project_name }}
+                 login_user=django
+                 encoding='UTF-8'
+
+- name: postgres - create postgis extension
+  raw: psql -d {{ django_project_name }} -c "CREATE EXTENSION postgis"

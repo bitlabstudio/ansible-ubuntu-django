@@ -1,0 +1,12 @@
+---
+- name: nginx - install
+  remote_user: root
+  apt: name=nginx
+
+- name: nginx - upload nginx conf
+  remote_user: root
+  template: src=nginx.conf dest=/etc/nginx/sites-enabled/{{ django_project_name }}
+
+- name: nginx - restart
+  remote_user: root
+  shell: service nginx restart

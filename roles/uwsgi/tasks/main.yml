@@ -1,0 +1,10 @@
+---
+- name: uwsgi - create folders
+  shell: mkdir -p log/uwsgi tmp
+
+- name: uwsgi - install
+  remote_user: root
+  pip: name=uwsgi
+
+- name: uwsgi upload uwsgi.ini
+  template: src=uwsgi.ini dest=~/etc/uwsgi.ini

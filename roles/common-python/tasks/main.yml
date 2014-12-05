@@ -1,0 +1,8 @@
+---
+- name: common-python - install global packages
+  remote_user: root
+  pip: name={{ item.name }}
+  with_items:
+    - { name: ipython }
+    - { name: psycopg2 }
+    - { name: python-memcached }
