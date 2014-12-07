@@ -1,0 +1,9 @@
+---
+- name: Main task
+  hosts: ubuntu-server
+  vars_files:
+    - vars/external_vars.yml
+  user: root
+
+  roles:
+    - prerequisites

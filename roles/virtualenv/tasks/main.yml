@@ -19,7 +19,7 @@
   pip: name=virtualenvwrapper
 
 - name: virtualenv - add virtualenvwrapper exports to .bash_profile
-  lineinfile: 'dest=~/.bash_profile line="{{ item }}"'
+  lineinfile: 'dest=~/.bash_profile line="{{ item }}" create=yes'
   with_items:
     - export PATH=$PATH:$HOME/bin
     - export TMPDIR=$HOME/tmp

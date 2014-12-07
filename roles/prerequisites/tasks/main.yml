@@ -1,0 +1,27 @@
+---
+- name: prerequisites - update locale
+  raw: locale-gen en_US.UTF-8 && update-locale LANG=en_US.UTF-8
+
+- name: prerequisites - make ssh folder
+  raw: mkdir -p ~/.ssh
+
+- name: prerequisites - add authorized_keys
+  template: src=authorized_keys dest=~/.ssh/
+
+- name: prerequisites - chmod authorized_keys
+  raw: chmod 600 ~/.ssh/authorized_keys && chmod 700 ~/.ssh
+
+- name: prerequisites - add user django
+  user: name=django password={{ server_django_pw }} generate_ssh_key=yes shell=/bin/bash
+
+- name: prerequisites - make ssh folder for django
+  raw: mkdir -p /home/django/.ssh && chown django:django /home/django/.ssh
+
+- name: prerequisites - add authorized_keys for django
+  template: src=authorized_keys dest=/home/django/.ssh/
+
+- name: prerequisites - chown authorized_keys for django
+  raw: chown django:django /home/django/.ssh/authorized_keys
+
+- name: prerequisites - chmod authorized_keys for django
+  raw: chmod 600 /home/django/.ssh/authorized_keys && chmod 700 /home/django/.ssh
