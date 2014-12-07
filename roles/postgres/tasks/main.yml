@@ -45,3 +45,9 @@
 
 - name: postgres - create postgis extension
   raw: psql -d {{ django_project_name }} -c "CREATE EXTENSION postgis"
+
+- name: postgres - create pgpass
+  lineinfile: dest=~/.pgpass line="localhost:*:django:{{ django_project_name }}:{{ postgres_django_pw }}"
+
+- name: postgres - create chmod .pgpass
+  raw: chmod 600 ~/.pgpass

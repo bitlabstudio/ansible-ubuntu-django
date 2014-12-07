@@ -3,13 +3,14 @@
   remote_user: root
   apt: pkg={{ item }} update_cache=yes state=latest cache_valid_time=4320
   with_items:
-    - g++
-    - make
     - curl
-    - libssl-dev
-    - python-dev
+    - g++
+    - gettext
     - git-core
-    - mercurial
-    - sqlite3
     - libsqlite3-dev
+    - libssl-dev
+    - make
+    - mercurial
+    - python-dev
+    - sqlite3
     - vim
