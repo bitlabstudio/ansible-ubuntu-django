@@ -1,6 +1,6 @@
 # Ansible Playbook for Django on Ubuntu 12.04
 
-DO NOT USE THIS! PLAYBOOK NOT EXECUTABLE! WORK IN PROGRESS!
+STATUS: Playbook contains untested changes!
 
 ## Overview
 
