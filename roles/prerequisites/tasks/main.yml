@@ -25,3 +25,10 @@
 
 - name: prerequisites - chmod authorized_keys for django
   raw: chmod 600 /home/django/.ssh/authorized_keys && chmod 700 /home/django/.ssh
+
+- name: prerequisites - create bin folder for django
+  remote_user: django
+  raw: mkdir -p ~/bin
+
+- name: prerequisites - add bin folder to .bash_profile for django
+  lineinfile: create=yes dest=~/.bash_profile line="export PATH=$PATH:$HOME/bin"
