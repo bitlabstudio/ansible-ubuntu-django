@@ -31,4 +31,5 @@
   raw: mkdir -p ~/bin
 
 - name: prerequisites - add bin folder to .bash_profile for django
+  remote_user: django
   lineinfile: create=yes dest=~/.bash_profile line="export PATH=$PATH:$HOME/bin"
