@@ -1,12 +1,31 @@
 ---
-# Change these things to your liking
-django_project_name: YOUR_PROJECT_NAME
-postgres_pw: YOUR_POSTGRES_PASSWORD
-postgres_django_pw: YOUR_POSTGRES_DJANGO_PASSWORD 
-git_repo: YOUR_GIT_URL 
-nginx_server_name: example.com
+# This password should be given to you when you created the server instance
+# If you setup a DigitalOcean droplet with a ssh key, just set this password
+# to ``None``
+server_root_pw: YOUR_ROOT_PASSWORD
 
+# Install `sudo pip install passlib`
+# Generate a crypted password like so:
+# python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_crypt.encrypt(getpass.getpass())"
+server_django_pw: YOUR_ENCRUPTED_DJANGO_USER_PASSWORD
+# Cleartext password: YOUR_DJANGO_USER_PASSWORD
+
+# These db passwords will be set by the script. Make something up!
+postgres_pw: YOUR_POSTGRES_ROLE_PASSWORD
+postgres_django_pw: YOUR_DJANGO_ROLE_PASSWORD
+
+# Your git repo, django project and venv should be called the same:
+django_project_name: YOUR_DJANG_PROJECT_NAME
+
+# From where can we clone the django project?
+git_repo: YOUR_GIT_REPO_URL
+
+# Your website URL:
+nginx_server_name: your-domain.com
+
+# =============================================================================
 # The things here should not be changed when using a default server layout
+# =============================================================================
 venv_name: "{{ django_project_name }}"
 server_git_repo: /home/django/src/{{ django_project_name }}
 server_git_project_root: "{{ server_git_repo }}/{{ django_project_name }}"
