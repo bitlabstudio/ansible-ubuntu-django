@@ -1,0 +1,34 @@
+---
+- name: iptables - install iptables
+  remote_user: root
+  apt: pkg={{ item }}
+  with_items:
+    - iptables
+
+- name: iptables - flush old config
+  remote_user: root
+  raw: iptables -F && iptables -X
+
+- name: iptables - add rules
+  remote_user: root
+  raw: "{{ item }}"
+  with_items:
+    - iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+    - iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+    - iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+    - iptables -A INPUT -p icmp -j ACCEPT
+    - iptables -A INPUT -s 127.0.0.1 -j ACCEPT
+    - iptables -A INPUT -j REJECT
+    - iptables -A FORWARD -j REJECT
+
+- name: iptables - save rules
+  remote_user: root
+  raw: sudo iptables-save > /etc/iptables.rules
+
+- name: iptables - upload script
+  remote_user: root
+  template: src=iptables dest=/etc/network/if-up.d/iptables
+
+- name: iptables - chmod script
+  remote_user: root
+  raw: chmod +x /etc/network/if-up.d/iptables

@@ -6,11 +6,12 @@
   user: django
 
   roles:
-    - common
-    - virtualenv
-    - postgres
-    - common-python
-    - django
-    - nginx
-    - uwsgi
-    - supervisor
+    - { role: common, tags: [ 'common' ] }
+    - { role: virtualenv, tags: [ 'virtualenv' ] }
+    - { role: postgres, tags: [ 'postgres' ] }
+    - { role: common-python, tags: [ 'common-python' ] }
+    - { role: django, tags: [ 'django' ] }
+    - { role: nginx, tags: [ 'nginx' ] }
+    - { role: uwsgi, tags: [ 'uwsgi' ] }
+    - { role: supervisor, tags: [ 'supervisor' ] }
+    - { role: iptables, tags: [ 'iptables' ] }
