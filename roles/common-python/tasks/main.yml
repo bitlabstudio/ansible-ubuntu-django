@@ -6,3 +6,8 @@
     - { name: ipython }
     - { name: psycopg2 }
     - { name: python-memcached }
+
+- name: common-python - update distutils
+  remote_user: root
+  sudo: yes
+  raw: pip install distribute --upgrade
