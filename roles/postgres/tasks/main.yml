@@ -1,20 +1,20 @@
 ---
 - name: postgres - add postgres to sources.list
   remote_user: root
-  lineinfile: create=yes dest=/etc/apt/sources.list.d/pgdg.list line='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main'
+  lineinfile: create=yes dest=/etc/apt/sources.list.d/pgdg.list line='deb http://apt.postgresql.org/pub/repos/apt trusty-pgdg main'
 
 - name: postgres - add postgres repository key
   remote_user: root
-  raw: wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+  raw: wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
 
 - name: postgres - install packages
   remote_user: root
   apt: pkg={{ item }} update_cache=yes state=latest
   with_items:
-    - postgresql-9.3
+    - postgresql-9.4
     - postgresql-contrib
-    - postgresql-server-dev-9.3
-    - postgresql-9.3-postgis-2.1
+    - postgresql-server-dev-9.4
+    - postgresql-9.4-postgis-2.1
     - python-psycopg2
     - pgadmin3
     - libpq-dev
