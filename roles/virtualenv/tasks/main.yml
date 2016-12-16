@@ -3,19 +3,19 @@
   raw: mkdir -p ~/tmp
 
 - name: virtualenv - install setuptools
-  remote_user: root
+  sudo: yes
   apt: name=python-setuptools
 
 - name: virtualenv - install pip
-  remote_user: root
+  sudo: yes
   easy_install: name=pip
 
 - name: virtualenv - install
-  remote_user: root
+  sudo: yes
   pip: name=virtualenv
 
 - name: virtualenv - install virtualenvwrapper
-  remote_user: root
+  sudo: yes
   pip: name=virtualenvwrapper
 
 - name: virtualenv - add virtualenvwrapper exports to .bash_profile

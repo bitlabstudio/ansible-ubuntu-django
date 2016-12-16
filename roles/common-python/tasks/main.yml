@@ -1,6 +1,6 @@
 ---
 - name: common-python - install global packages
-  remote_user: root
+  sudo: yes
   pip: name={{ item.name }}
   with_items:
     - { name: ipython }
@@ -8,6 +8,5 @@
     - { name: python-memcached }
 
 - name: common-python - update distutils
-  remote_user: root
   sudo: yes
-  raw: pip install distribute --upgrade
+  raw: easy_install distribute

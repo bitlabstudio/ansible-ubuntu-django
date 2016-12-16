@@ -3,7 +3,7 @@
   shell: mkdir -p log/uwsgi tmp
 
 - name: uwsgi - install
-  remote_user: root
+  sudo: yes
   pip: name=uwsgi
 
 - name: uwsgi upload uwsgi.ini

@@ -4,13 +4,13 @@
 
 - name: django - clone project
   git: repo={{ git_repo }}
-       dest=/home/django/src/{{ django_project_name }}
-       ssh_opts="-o StrictHostKeyChecking=no"
+       dest=/home/{{ user }}/src/{{ django_project_name }}
+       accept_hostkey=yes
 
 - name: django - update submodules
   shell: git submodule init && git submodule update
   args:
-      chdir: "{{ server_git_repo }}"
+      chdir: {{ server_git_repo }}
 
 - name: django - create project venv
   shell: source ~/.bash_profile && mkvirtualenv {{ venv_name }}

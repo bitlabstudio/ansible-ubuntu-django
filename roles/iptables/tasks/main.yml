@@ -1,17 +1,17 @@
 ---
 - name: iptables - install iptables
-  remote_user: root
+  sudo: yes
   apt: pkg={{ item }}
   with_items:
     - iptables
 
 - name: iptables - flush old config
-  remote_user: root
+  sudo: yes
   raw: iptables -F && iptables -X
 
 - name: iptables - add rules
-  remote_user: root
-  raw: "{{ item }}"
+  sudo: yes
+  raw: {{ item }}
   with_items:
     - iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
     - iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
@@ -24,13 +24,13 @@
     - iptables -A FORWARD -j REJECT
 
 - name: iptables - save rules
-  remote_user: root
+  sudo: yes
   raw: sudo iptables-save > /etc/iptables.rules
 
 - name: iptables - upload script
-  remote_user: root
+  sudo: yes
   template: src=iptables dest=/etc/network/if-up.d/iptables
 
 - name: iptables - chmod script
-  remote_user: root
+  sudo: yes
   raw: chmod +x /etc/network/if-up.d/iptables

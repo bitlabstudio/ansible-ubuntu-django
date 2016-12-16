@@ -3,7 +3,8 @@
   hosts: ubuntu-server
   vars_files:
     - vars/external_vars.yml
-  user: root
+  user: {{ user }}
 
   roles:
     - prerequisites
+    - { role: access, when: upload_authorized_keys == 'yes' }

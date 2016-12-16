@@ -1,6 +1,6 @@
 ---
 - name: common - install packages
-  remote_user: root
+  sudo: yes
   apt: pkg={{ item }} update_cache=yes state=latest cache_valid_time=4320
   with_items:
     - curl

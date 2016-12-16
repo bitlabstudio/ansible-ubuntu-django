@@ -1,14 +1,14 @@
 ---
 - name: postgres - add postgres to sources.list
-  remote_user: root
+  sudo: yes
   lineinfile: create=yes dest=/etc/apt/sources.list.d/pgdg.list line='deb http://apt.postgresql.org/pub/repos/apt trusty-pgdg main'
 
 - name: postgres - add postgres repository key
-  remote_user: root
+  sudo: yes
   raw: wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
 
 - name: postgres - install packages
-  remote_user: root
+  sudo: yes
   apt: pkg={{ item }} update_cache=yes state=latest
   with_items:
     - postgresql-9.4
@@ -20,34 +20,28 @@
     - libpq-dev
 
 - name: postgres - change admin password
-  remote_user: root
+  sudo: yes
   raw: sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD '{{ postgres_pw }}';"
 
-- name: postgres - create django user
-  remote_user: root
+- name: postgres - create postgres user
   sudo_user: postgres
   sudo: yes
-  postgresql_user: name=django
+  postgresql_user: name={{ postgres_user }}
                    role_attr_flags=SUPERUSER
                    password={{ postgres_django_pw }}
 
-- name: postgres - create django db
-  remote_user: root
+- name: postgres - create project db
   sudo_user: postgres
   sudo: yes
-  postgresql_db: name=django
+  postgresql_db: name={{ postgres_db_name }}
                  encoding='UTF-8'
-
-- name: postgres - create project db
-  postgresql_db: name={{ django_project_name }}
-                 login_user=django
-                 encoding='UTF-8'
-
-- name: postgres - create postgis extension
-  raw: psql -d {{ django_project_name }} -c "CREATE EXTENSION postgis"
+                 owner='{{ postgres_user }}'
 
 - name: postgres - create pgpass
-  lineinfile: create=yes dest=~/.pgpass line="localhost:*:django:{{ django_project_name }}:{{ postgres_django_pw }}"
+  lineinfile: create=yes dest=~/.pgpass line="localhost:*:{{ postgres_db_name }}:{{ postgres_user }}:{{ postgres_django_pw }}"
 
 - name: postgres - create chmod .pgpass
   raw: chmod 600 ~/.pgpass
+
+- name: postgres - create postgis extension
+  raw: psql -U {{ postgres_user }} -d {{ postgres_db_name }} -c "CREATE EXTENSION postgis" -h localhost
