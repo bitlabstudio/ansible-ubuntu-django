@@ -2,8 +2,8 @@
 # Ubuntu user name
 user: ubuntu
 
-# Activate ('yes') this setting to upload your authorized_keys to the server
-upload_authorized_keys: no
+# Activate ("yes") this setting to upload your authorized_keys to the server
+upload_authorized_keys: "no"
 
 # These db passwords will be set by the script. Make something up!
 postgres_user: django
@@ -26,10 +26,10 @@ nginx_server_name: your-domain.com
 # =============================================================================
 # The things here should not be changed when using a default server layout
 # =============================================================================
-venv_name: {{ django_project_name }}
-server_git_repo: /home/{{ user }}/src/{{ django_project_name }}
-server_git_project_root: {{ server_git_repo }}/
-server_requirements_txt: {{ server_git_project_root }}/{{ django_folder }}requirements.txt
-server_project_folder: /home/{{ user }}/project
-wsgi_folder: {{ server_project_folder }}/{{ django_folder }}{{ django_project_name }}/wsgi.py
-server_assets_folder: /home/{{ user }}/project_assets
+venv_name: "{{ django_project_name }}"
+server_git_repo: "/home/{{ user }}/src/{{ django_project_name }}"
+server_git_project_root: "{{ server_git_repo }}/"
+server_requirements_txt: "{{ server_git_project_root }}{{ django_folder }}requirements.txt"
+server_project_folder: "/home/{{ user }}/project"
+wsgi_folder: "{{ server_project_folder }}/{{ django_folder }}{{ django_project_name }}/{{ django_project_name }}/wsgi.py"
+server_assets_folder: "/home/{{ user }}/project_assets"

@@ -10,7 +10,7 @@
 - name: django - update submodules
   shell: git submodule init && git submodule update
   args:
-      chdir: {{ server_git_repo }}
+      chdir: "{{ server_git_repo }}"
 
 - name: django - create project venv
   shell: source ~/.bash_profile && mkvirtualenv {{ venv_name }}

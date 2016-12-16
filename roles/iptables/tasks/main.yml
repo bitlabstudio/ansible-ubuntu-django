@@ -11,7 +11,7 @@
 
 - name: iptables - add rules
   sudo: yes
-  raw: {{ item }}
+  raw: "{{ item }}"
   with_items:
     - iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
     - iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT

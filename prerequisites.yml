@@ -3,7 +3,7 @@
   hosts: ubuntu-server
   vars_files:
     - vars/external_vars.yml
-  user: {{ user }}
+  user: "{{ user }}"
 
   roles:
     - prerequisites
