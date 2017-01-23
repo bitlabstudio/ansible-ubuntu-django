@@ -10,7 +10,10 @@
   template: src=supervisord.conf dest=/home/{{ user }}/etc/supervisord.conf
 
 - name: supervisor - add crontab
-  cron: name="start supervisor" minute="*/5" job="PATH=/usr/local/bin /usr/local/bin/supervisord -c /home/{{ user }}/etc/supervisord.conf > /home/{{ user }}/log/supervisor/crontab.log 2>&1"
+  cron:
+    name: "start supervisor"
+    minute: "*/5"
+    job: "PATH=/usr/local/bin /usr/local/bin/supervisord -c /home/{{ user }}/etc/supervisord.conf > /home/{{ user }}/log/supervisor/crontab.log 2>&1"
 
 - name: supervisor - restart
   shell: source ~/.bash_profile && supervisorctl restart all

@@ -20,7 +20,8 @@ django_folder:
 # From where can we clone the django project?
 git_repo: YOUR_GIT_REPO_URL
 
-# Your website URL:
+# Your website URLs:
+nginx_ip: your.server.IP
 nginx_server_name: your-domain.com
 
 # =============================================================================

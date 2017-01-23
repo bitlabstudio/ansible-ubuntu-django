@@ -1,0 +1,33 @@
+---
+- name: letsencrypt - install certbot
+  shell: wget https://dl.eff.org/certbot-auto
+  sudo: yes
+  args:
+    chdir: /usr/local/sbin/
+
+- name: letsencrypt - chmod
+  shell: chmod a+x /usr/local/sbin/certbot-auto
+  sudo: yes
+
+- name: letsencrypt - get cert
+  shell: certbot-auto certonly --webroot -w /var/www/{{ django_project_name }} -d {{ nginx_server_name }} -d www.{{ nginx_server_name }}
+
+- name: letsencrypt - create DH group
+  shell: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+  sudo: yes
+
+- name: letsencrypt - cron cert renewal
+  cron:
+    name: "renew cert"
+    minute: "30"
+    hour: "2"
+    weekday: "1"
+    job: "/usr/local/sbin/certbot-auto renew >> /var/log/le-renew.log"
+
+- name: letsencrypt - cron restart nginx
+  cron:
+    name: "restart nginx"
+    minute: "35"
+    hour: "2"
+    weekday: "1"
+    job: "/etc/init.d/nginx reload"
