@@ -16,3 +16,4 @@
     - { role: supervisor, tags: [ 'supervisor' ] }
     - { role: letsencrypt, tags: [ 'letsencrypt' ] }
     - { role: rabbitmq, tags: [ 'rabbitmq' ] }
+    - { role: celery, tags: [ 'celery' ] }

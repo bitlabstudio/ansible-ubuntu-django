@@ -1,0 +1,4 @@
+---
+- name: celery - install
+  sudo: yes
+  pip: name=celery
