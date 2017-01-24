@@ -15,4 +15,5 @@
     - { role: uwsgi, tags: [ 'uwsgi' ] }
     - { role: supervisor, tags: [ 'supervisor' ] }
     - { role: letsencrypt, tags: [ 'letsencrypt' ] }
+    - { role: rabbitmq, tags: [ 'rabbitmq' ] }
     - { role: iptables, tags: [ 'iptables' ] }
