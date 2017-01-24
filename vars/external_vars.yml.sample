@@ -5,11 +5,16 @@ user: ubuntu
 # Activate ("yes") this setting to upload your authorized_keys to the server
 upload_authorized_keys: "no"
 
-# These db passwords will be set by the script. Make something up!
+# The db password will be set by the script. Make something up!
+postgres_host: localhost
 postgres_user: django
 postgres_db_name: django
-postgres_pw: YOUR_POSTGRES_ROLE_PASSWORD
 postgres_django_pw: YOUR_DJANGO_ROLE_PASSWORD
+
+# Use this settings, if you want to create a local database
+# postgres_local = "yes"
+# postgres_pw = YOUR_POSTGRES_PASSWORD
+# postgres_postgis = "yes"
 
 # Your git repo, django project and venv should be called the same:
 django_project_name: YOUR_DJANGO_PROJECT_NAME
@@ -19,10 +24,14 @@ django_folder:
 
 # From where can we clone the django project?
 git_repo: YOUR_GIT_REPO_URL
+# github_user: YOUR_GITHUB_USERNAME
+# github_token: YOUR_GITHUB_ACCESS_TOKEN
+# github_repo_owner: USER_OR_ORG_NAME
+# github_repo_name: REPO_NAME
 
 # Your website URLs:
-nginx_ip: your.server.IP
-nginx_server_name: your-domain.com
+ip: your.server.IP
+domain: your-domain.com
 
 # =============================================================================
 # The things here should not be changed when using a default server layout
@@ -32,5 +41,6 @@ server_git_repo: "/home/{{ user }}/src/{{ django_project_name }}"
 server_git_project_root: "{{ server_git_repo }}/"
 server_requirements_txt: "{{ server_git_project_root }}{{ django_folder }}requirements.txt"
 server_project_folder: "/home/{{ user }}/project"
+server_project_settings_folder: "{{ server_project_folder }}/{{ django_project_name }}/settings/local_settings.py"
 wsgi_folder: "{{ server_project_folder }}/{{ django_folder }}{{ django_project_name }}/{{ django_project_name }}/wsgi.py"
 server_assets_folder: "/home/{{ user }}/project_assets"

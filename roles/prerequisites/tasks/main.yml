@@ -8,3 +8,6 @@
 
 - name: prerequisites - create ssh key
   user: name={{ user }} generate_ssh_key=yes
+
+- name: prerequisites - add deploy key
+  raw:  curl -u {{ github_user }}:{{ github_token }} -d '{"title": "ubuntu", "key": "{{ lookup('file', '~/.ssh/id_rsa.pub') }}", "read_only": true}' https://api.github.com/repos/{{ github_repo_owner }}/{{ github_repo_name }}/keys

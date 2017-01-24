@@ -6,6 +6,8 @@
   user: "{{ user }}"
 
   roles:
+    - { role: prerequisites, tags: [ 'prerequisites' ] }
+    - { role: access, when: upload_authorized_keys == 'yes' }
     - { role: common, tags: [ 'common' ] }
     - { role: virtualenv, tags: [ 'virtualenv' ] }
     - { role: postgres, tags: [ 'postgres' ] }

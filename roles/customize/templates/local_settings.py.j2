@@ -1,0 +1,117 @@
+"""
+Local settings for the project {{ django_project_name }}.
+Taken from: https://github.com/bitlabstudio/django-project-template/
+
+"""
+import os
+
+from .base_settings import DJANGO_PROJECT_ROOT
+
+
+DEBUG = True
+SANDBOX = True
+DEFAULT_HTTP_PROTOCOL = 'http'
+DISABLED_APPS = []
+
+# Set this to false on PROD / works with `grunt watch` on local development.
+LIVERELOAD = True
+
+# Enable/disable django compressor
+LOCAL_COMPRESS_ENABLED = False
+
+# For local development
+ADMIN_URL = 'admin/'
+
+# For your server
+# ADMIN_URL = 'admin-XXXX/'
+
+# Used for fabfile
+# PEM_KEY_DIR = '~/.ssh/{{ django_project_name }}.pem'
+
+# Needed by debug_toolbar. Set it to None to disable the toolbar.
+INTERNAL_IPS = None
+# INTERNAL_IPS = ('127.0.0.1',)
+
+ADMINS = (
+    ('{{ django_project_name }}', 'info@{{ domain }}'),
+)
+
+MANAGERS = ADMINS
+
+# First create your DB role like so:
+# > psql (connect as superuser)
+# > create database {{ django_project_name }};
+# > create user {{ django_project_name }} with password '{{ django_project_name }}';
+# > grant all privileges on database {{ django_project_name }} to {{ django_project_name }};
+
+# if you want to use geodjango:
+# > \connect {{ django_project_name }};
+# > create extension postgis;
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '{{ django_project_name }}',
+        'USER': '{{ django_project_name }}',
+        'PASSWORD': '{{ django_project_name }}',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+
+# Set this to your OS username if you are working with Postgres.app on OSX
+# LOCAL_PG_ADMIN_ROLE = 'username'
+
+# Hosts/domain names that are valid for this site; required if DEBUG is False
+# See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
+
+# On your server, it should look like this:
+ALLOWED_HOSTS = ['{{ ip }}', '{{ domain }}', 'www.{{ domain }}']
+
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/var/www/example.com/media/"
+MEDIA_ROOT = '/home/{{ user }}/project_assets/media/'
+
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# Example: "/var/www/example.com/static/"
+STATIC_ROOT = '/home/{{ user }}/project_assets/static/'
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = 'http://www.miniwebtool.com/django-secret-key-generator/'
+
+
+EMAIL_BACKEND = 'mailer.backend.DbBackend'
+# ================================
+# Local Development Email Settings
+# ================================
+# MAILER_EMAIL_BACKEND = 'django_libs.test_email_backend.EmailBackend'
+# TEST_EMAIL_BACKEND_RECIPIENTS = ADMINS
+
+# FROM_EMAIL = ADMINS[0][1]
+# EMAIL_SUBJECT_PREFIX = '[dev {{ django_project_name }}] '
+
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = FROM_EMAIL
+# EMAIL_HOST_PASSWORD = "yourpassword"
+# EMAIL_PORT = 587
+
+
+# ==========================
+# Email Server Settings
+# ==========================
+FROM_EMAIL = "noreply@{{ domain }}"
+EMAIL_SUBJECT_PREFIX = '[{{ django_project_name }}] '
+
+EMAIL_HOST = 'smtp.example.com'
+EMAIL_HOST_USER = "{{ django_project_name }}"
+EMAIL_HOST_PASSWORD = "yourpassword"
+EMAIL_PORT = 25
+
+
+# ===========================
+# More general email settings
+# ===========================
+DEFAULT_FROM_EMAIL = FROM_EMAIL
+SERVER_EMAIL = FROM_EMAIL
+EMAIL_USE_TLS = True

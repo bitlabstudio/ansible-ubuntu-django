@@ -25,9 +25,6 @@ password any more.
 * Add all keys that should have access to the server to
   `/roles/access/templates/authorized_keys` (only if you want to upload your
   keys)
-* Run `ansible-playbook -i hosts prerequisites.yml`
-* SSH into the server `ssh user@IP` or `ssh ssh_alias`
-* Add the user's key to your Github profile: `cat ~/.ssh/id_rsa.pub`
 
 To execute the playbook:
 

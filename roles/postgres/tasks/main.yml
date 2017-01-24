@@ -1,4 +1,7 @@
 ---
+- name: postgres - create folders
+  shell: mkdir -p backups/{{ django_project_name }}/postgres
+
 - name: postgres - add postgres to sources.list
   sudo: yes
   lineinfile: create=yes dest=/etc/apt/sources.list.d/pgdg.list line='deb http://apt.postgresql.org/pub/repos/apt trusty-pgdg main'
@@ -11,17 +14,15 @@
   sudo: yes
   apt: pkg={{ item }} update_cache=yes state=latest
   with_items:
-    - postgresql-9.4
-    - postgresql-contrib
-    - postgresql-server-dev-9.4
-    - postgresql-9.4-postgis-2.1
+    - postgresql-client-common
+    - postgresql-client-9.5
     - python-psycopg2
-    - pgadmin3
     - libpq-dev
 
 - name: postgres - change admin password
   sudo: yes
   raw: sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD '{{ postgres_pw }}';"
+  when: postgres_local == "yes"
 
 - name: postgres - create postgres user
   sudo_user: postgres
@@ -29,6 +30,7 @@
   postgresql_user: name={{ postgres_user }}
                    role_attr_flags=SUPERUSER
                    password={{ postgres_django_pw }}
+  when: postgres_local == "yes"
 
 - name: postgres - create project db
   sudo_user: postgres
@@ -36,12 +38,14 @@
   postgresql_db: name={{ postgres_db_name }}
                  encoding='UTF-8'
                  owner='{{ postgres_user }}'
+  when: postgres_local == "yes"
 
 - name: postgres - create pgpass
-  lineinfile: create=yes dest=~/.pgpass line="localhost:*:{{ postgres_db_name }}:{{ postgres_user }}:{{ postgres_django_pw }}"
+  lineinfile: create=yes dest=~/.pgpass line="{{ postgres_host }}:*:{{ postgres_db_name }}:{{ postgres_user }}:{{ postgres_django_pw }}"
 
 - name: postgres - create chmod .pgpass
   raw: chmod 600 ~/.pgpass
 
 - name: postgres - create postgis extension
   raw: psql -U {{ postgres_user }} -d {{ postgres_db_name }} -c "CREATE EXTENSION postgis" -h localhost
+  when: (postgres_local == "yes" and postgres_postgis == "yes")
