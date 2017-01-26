@@ -10,7 +10,8 @@
   sudo: yes
 
 - name: letsencrypt - get cert
-  shell: certbot-auto certonly --webroot -w /var/www/{{ django_project_name }} -d {{ domain }} -d www.{{ domain }}
+  shell: certbot-auto certonly --webroot -w /usr/share/nginx/html --agree-tos -n -d {{ domain }} -d www.{{ domain }}
+  sudo: yes
 
 - name: letsencrypt - create DH group
   shell: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
