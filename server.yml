@@ -16,6 +16,7 @@
     - { role: nginx, tags: [ 'nginx' ] }
     - { role: uwsgi, tags: [ 'uwsgi' ] }
     - { role: supervisor, tags: [ 'supervisor' ] }
+    - { role: customize, tags: [ 'customize' ] }
     - { role: letsencrypt, tags: [ 'letsencrypt' ] }
     - { role: rabbitmq, tags: [ 'rabbitmq' ] }
     - { role: celery, tags: [ 'celery' ] }

@@ -1,11 +1,5 @@
 ---
 - name: customize - add local settings
-- template:
+  template:
     src: local_settings.py.j2
-    dest: {{ server_project_local_settings }}
-
-- name: customize - link scripts
-  - file:
-    src: ~/src/project/scripts/*.sh
-    dest: ~/bin/
-    state: link
+    dest: "{{ server_project_local_settings }}"
