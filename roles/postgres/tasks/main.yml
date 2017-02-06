@@ -29,7 +29,7 @@
   sudo: yes
   postgresql_user: name={{ postgres_user }}
                    role_attr_flags=SUPERUSER
-                   password={{ postgres_django_pw }}
+                   password={{ postgres_pw }}
   when: postgres_local == "yes"
 
 - name: postgres - create project db
@@ -41,7 +41,7 @@
   when: postgres_local == "yes"
 
 - name: postgres - create pgpass
-  lineinfile: create=yes dest=~/.pgpass line="{{ postgres_host }}:*:{{ postgres_db_name }}:{{ postgres_user }}:{{ postgres_django_pw }}"
+  lineinfile: create=yes dest=~/.pgpass line="{{ postgres_host }}:*:{{ postgres_db_name }}:{{ postgres_user }}:{{ postgres_pw }}"
 
 - name: postgres - create chmod .pgpass
   raw: chmod 600 ~/.pgpass
