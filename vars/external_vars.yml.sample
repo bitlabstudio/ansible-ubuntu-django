@@ -14,7 +14,6 @@ postgres_port: 5432
 
 # Use this settings, if you want to create a local database
 postgres_local: "no"
-# postgres_pw: YOUR_POSTGRES_PASSWORD
 postgres_postgis: "yes"
 
 # Your git repo, django project and venv should be called the same:
