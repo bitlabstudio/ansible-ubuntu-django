@@ -15,7 +15,7 @@
 - name: django - create project venv
   shell: source ~/.bash_profile && mkvirtualenv {{ venv_name }}
   args:
-        executable: /bin/bash
+      executable: /bin/bash
 
 - name: django - install project venv
   shell: source ~/.bash_profile && workon {{ venv_name }} && pip install -r {{ server_requirements_txt }}

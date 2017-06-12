@@ -1,19 +1,28 @@
 ---
 - name: supervisor - create folders
-  shell: mkdir -p etc log/supervisor
+  shell: mkdir -p etc /home/{{ user }}/log/supervisor /home/{{ user }}/tmp
 
 - name: supervisor - install
   sudo: yes
-  pip: name=supervisor
+  pip: name="git+https://github.com/Supervisor/supervisor@946d9cf3be4db398f5c2474140e0b92880863bb2#egg=supervisor"
 
 - name: supervisor - upload supervisord.conf
-  template: src=supervisord.conf dest=/home/{{ user }}/etc/supervisord.conf
+  template: src=supervisord.conf dest=/etc/supervisord.conf
+
+- name: supervisor - add sock file
+  file:
+    path: /home/{{ user }}/tmp/supervisor.sock
+    state: touch
 
 - name: supervisor - add crontab
   cron:
     name: "start supervisor"
     minute: "*/5"
     job: "PATH=/usr/local/bin /usr/local/bin/supervisord -c /home/{{ user }}/etc/supervisord.conf > /home/{{ user }}/log/supervisor/crontab.log 2>&1"
+
+- name: supervisor - start supervisor
+  sudo: yes
+  shell: supervisord -c /etc/supervisord.conf
 
 - name: supervisor - restart
   shell: source ~/.bash_profile && supervisorctl restart all

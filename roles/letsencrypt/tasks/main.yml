@@ -9,6 +9,9 @@
   shell: chmod a+x /usr/local/sbin/certbot-auto
   sudo: yes
 
+- name: letsencrypt - create folders
+  shell: mkdir -p /home/{{ user }}/letsencrypt
+
 - name: letsencrypt - get cert
   shell: certbot-auto certonly --webroot -w /home/{{ user }}/www/letsencrypt --agree-tos -n -d {{ domain }} -d www.{{ domain }} --email={{ email }}
   sudo: yes
@@ -25,10 +28,11 @@
     weekday: "1"
     job: "/usr/local/sbin/certbot-auto renew >> /var/log/le-renew.log"
 
-- name: letsencrypt - cron restart nginx
-  cron:
-    name: "restart nginx"
-    minute: "35"
-    hour: "2"
-    weekday: "1"
-    job: "/etc/init.d/nginx reload"
+- name: letsencrypt - update nginx conf
+  sudo: yes
+  template: src=nginx.conf dest=/etc/nginx/sites-enabled/{{ django_project_name }}
+
+
+- name: letsencrypt - nginx restart
+  sudo: yes
+  shell: service nginx restart

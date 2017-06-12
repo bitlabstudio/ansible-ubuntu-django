@@ -1,6 +1,12 @@
 ---
 # Ubuntu user name
+# Use `ubuntu` for AWS and `root` for Digital Ocean
 user: ubuntu
+
+# Python version (2 or 3)
+# Also change the `ansible_python_interpreter` in server.yml
+python_main_version: 3
+python_sub_version: 5
 
 # Activate ("yes") this setting to upload your authorized_keys to the server
 upload_authorized_keys: "no"

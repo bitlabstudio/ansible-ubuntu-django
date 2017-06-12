@@ -1,10 +1,10 @@
 ---
 - name: uwsgi - create folders
-  shell: mkdir -p log/uwsgi tmp
+  shell: mkdir -p /home/{{ user }}/etc /home/{{ user }}/log/uwsgi
 
 - name: uwsgi - install
   sudo: yes
   pip: name=uwsgi
 
 - name: uwsgi upload uwsgi.ini
-  template: src=uwsgi.ini dest=~/etc/uwsgi.ini
+  template: src=uwsgi.ini dest=/home/{{ user }}/etc/uwsgi.ini

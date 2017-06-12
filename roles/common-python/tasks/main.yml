@@ -1,9 +1,16 @@
 ---
+- name: common-python - link python 2
+  sudo: yes
+  file:
+    src: /usr/bin/python2.7
+    dest: /usr/bin/python
+    state: link
+
 - name: common-python - install global packages
   sudo: yes
   pip: name={{ item.name }}
   with_items:
-    - { name: ipython }
+    - { name: ipython, version: 5.3.0 }
     - { name: psycopg2 }
     - { name: python-memcached }
 

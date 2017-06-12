@@ -9,6 +9,12 @@
 - name: virtualenv - install pip
   sudo: yes
   easy_install: name=pip
+  when: python == 2
+
+- name: virtualenv - install pip3
+  sudo: yes
+  apt: name=python3-pip
+  when: python == 3
 
 - name: virtualenv - install
   sudo: yes
@@ -23,8 +29,8 @@
   with_items:
     - export PATH=$PATH:$HOME/bin
     - export TMPDIR=$HOME/tmp
-    - export WORKON_HOME=$HOME/Envs
-    - export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+    - export WORKON_HOME=/home/{{ user }}/Envs
+    - export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python{{ python_main_version}}.{{ python_sub_version }}
     - export PIP_VIRTUALENV_BASE=$WORKON_HOME
     - export PIP_RESPECT_VIRTUALENV=true
     - source /usr/local/bin/virtualenvwrapper.sh
