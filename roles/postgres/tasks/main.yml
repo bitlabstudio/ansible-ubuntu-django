@@ -18,17 +18,6 @@
     - postgresql-client-9.5
     - python-psycopg2
     - libpq-dev
-    
-- name: postgres - install server packages
-  sudo: yes
-  apt: pkg={{ item }} update_cache=yes state=latest
-  with_items:
-    - postgresql-9.4
-    - postgresql-contrib
-    - postgresql-server-dev-9.4
-    - postgresql-9.4-postgis-2.1
-    - pgadmin3
-  when: postgres_local == "yes"
 
 - name: postgres - install server packages
   sudo: yes
