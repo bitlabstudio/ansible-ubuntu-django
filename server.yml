@@ -2,7 +2,7 @@
 - name: Main task
   hosts: ubuntu-server
   vars:
-    ansible_python_interpreter: "/usr/bin/python{{ python_main_version }}.{{ python_sub_version }}"
+    ansible_python_interpreter: "/usr/bin/python3.5"
   vars_files:
     - vars/external_vars.yml
   user: "{{ user }}"

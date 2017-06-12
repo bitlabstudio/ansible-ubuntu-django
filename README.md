@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is an Ansible playbook that sets up a Ubuntu 16.04 machine as a server for a Django project. It is primarily built for a typical AWS or Digital Ocean server.
+This is an Ansible playbook that sets up a Ubuntu 14.04 machine as a server for a Django project. It is primarily built for a typical AWS or Digital Ocean server.
 
 * PostgreSQL as the database
 * nginx & uWSGI to serve the Django site
@@ -19,6 +19,10 @@ This is an Ansible playbook that sets up a Ubuntu 16.04 machine as a server for 
 #### Let's Encrypt
 
 You'll have to change the A-records of your domain before running the letsencrypt roles. Otherwise letsencrypt is not able to verify your site.
+
+#### Github
+
+If you're cloning a Github repository, make sure to add your access token to the ``.github_token`` file.
 
 ## Usage
 

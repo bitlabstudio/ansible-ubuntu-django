@@ -13,7 +13,7 @@
   shell: mkdir -p /home/{{ user }}/letsencrypt
 
 - name: letsencrypt - get cert
-  shell: certbot-auto certonly --webroot -w /home/{{ user }}/www/letsencrypt --agree-tos -n -d {{ domain }} -d www.{{ domain }} --email={{ email }}
+  shell: certbot-auto certonly --webroot -w /home/{{ user }}/letsencrypt --agree-tos -n -d {{ domain }} -d www.{{ domain }} --email={{ email }}
   sudo: yes
 
 - name: letsencrypt - create DH group

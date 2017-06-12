@@ -9,12 +9,12 @@
 - name: virtualenv - install pip
   sudo: yes
   easy_install: name=pip
-  when: python == 2
+  when: python_main_version == 2
 
 - name: virtualenv - install pip3
   sudo: yes
   apt: name=python3-pip
-  when: python == 3
+  when: python_main_version == 3
 
 - name: virtualenv - install
   sudo: yes

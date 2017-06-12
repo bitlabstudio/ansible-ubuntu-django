@@ -2,3 +2,4 @@ hosts
 vars/external_vars.yml
 vars/backups/
 roles/prerequisites/templates/authorized_keys
+.github_token

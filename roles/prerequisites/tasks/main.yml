@@ -16,6 +16,6 @@
   register: ssh_key
 
 - name: prerequisites - add deploy key
-  shell: "curl -u {{ github_user }}:{{ github_token }} -d '{\"title\": \"ubuntu\", \"key\": \"{{ item }}\", \"read_only\": true}' https://api.github.com/repos/{{ github_repo_owner }}/{{ github_repo_name }}/keys"
+  shell: "curl -u {{ github_user }}:{{ lookup('file', '.github_token') }} -d '{\"title\": \"ubuntu\", \"key\": \"{{ item }}\", \"read_only\": true}' https://api.github.com/repos/{{ github_repo_owner }}/{{ github_repo_name }}/keys"
   with_items:
       - "{{ ssh_key.stdout }}"

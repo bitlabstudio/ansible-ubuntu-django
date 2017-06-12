@@ -29,9 +29,9 @@ django_project_name: YOUR_DJANGO_PROJECT_NAME
 django_folder:
 
 # From where can we clone the django project?
+# Don't forget to add your access token to ``.github_token``
 git_repo: YOUR_GIT_REPO_URL
 # github_user: YOUR_GITHUB_USERNAME
-# github_token: YOUR_GITHUB_ACCESS_TOKEN
 # github_repo_owner: USER_OR_ORG_NAME
 # github_repo_name: REPO_NAME
 
