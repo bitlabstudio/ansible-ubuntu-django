@@ -1,19 +1,25 @@
 ---
-- name: letsencrypt - install certbot
-  shell: wget https://dl.eff.org/certbot-auto
+- name: letsencrypt - prepare
   sudo: yes
-  args:
-    chdir: /usr/local/sbin/
+  apt:
+    name: software-properties-common
+    update_cache: yes
+    
+- name: letsencrypt - add certbot repository
+  sudo: yes
+  raw: add-apt-repository ppa:certbot/certbot
 
-- name: letsencrypt - chmod
-  shell: chmod a+x /usr/local/sbin/certbot-auto
+- name: letsencrypt - install certbot
   sudo: yes
+  apt:
+    name: python-certbot-nginx
+    update_cache: yes
 
 - name: letsencrypt - create folders
   shell: mkdir -p /home/{{ user }}/letsencrypt
 
 - name: letsencrypt - get cert
-  shell: certbot-auto certonly --webroot -w /home/{{ user }}/letsencrypt --agree-tos -n -d {{ domain }} -d www.{{ domain }} --email={{ email }}
+  shell: certbot --nginx certonly -w /home/{{ user }}/letsencrypt --agree-tos -n -d {{ domain }} -d www.{{ domain }} --email={{ email }}
   sudo: yes
 
 - name: letsencrypt - create DH group
@@ -26,7 +32,7 @@
     minute: "30"
     hour: "2"
     weekday: "1"
-    job: "/usr/local/sbin/certbot-auto renew >> /var/log/le-renew.log"
+    job: "certbot renew >> /var/log/le-renew.log"
 
 - name: letsencrypt - update nginx conf
   sudo: yes
